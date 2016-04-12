@@ -1,21 +1,32 @@
 package com.dux.reminder.server.controller;
 
-import org.springframework.stereotype.Controller;
+import com.dux.reminder.server.entity.Remind;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * Created by DUX on 08.04.2016.
  */
-@Controller
+@RestController
 @RequestMapping("/remind")
 public class ReminderController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
-    public String getReminder(ModelMap model){
-        return "Hello world";
+    public Remind getReminder(ModelMap model){
+        return mock();
+    }
+
+    private Remind mock() {
+        Remind remind = new Remind();
+        remind.setDate(new Date());
+        remind.setTitle("Title");
+        remind.setId(1L);
+        return remind;
     }
 }
