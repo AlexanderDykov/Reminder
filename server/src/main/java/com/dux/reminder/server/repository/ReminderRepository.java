@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by DUX on 12.04.2016.
  */
-public interface RemindRepository extends JpaRepository<Remind,Long> {
+public interface ReminderRepository extends JpaRepository<Remind,Long> {
     
 }

@@ -1,39 +1,45 @@
 package com.dux.reminder.server.controller;
 
 import com.dux.reminder.server.entity.Remind;
-import com.dux.reminder.server.repository.RemindRepository;
+import com.dux.reminder.server.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by DUX on 08.04.2016.
  */
-@RestController
 @RequestMapping("/remind")
+@RestController
 public class ReminderController {
 
     @Autowired
-    private RemindRepository repository;
+    private ReminderService service;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Remind getReminder(ModelMap model){
-        List<Remind> list = repository.findAll();
-        return mock();
+    public List<Remind> getAllReminders() {
+        return service.getAll();
     }
 
-    private Remind mock() {
-        Remind remind = new Remind();
-        remind.setDate(new Date());
-        remind.setTitle("Title");
-        remind.setId(1L);
-        return remind;
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Remind getReminderById(@PathVariable("id") long id) {
+        return service.getById(id);
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public Remind addReminder(@RequestBody Remind remind) {
+        return service.add(remind);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteReminderById(@PathVariable("id") long id) {
+        service.deleteById(id);
+    }
+
+
 }
